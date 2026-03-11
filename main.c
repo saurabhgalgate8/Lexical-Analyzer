@@ -51,7 +51,7 @@
  * ============================================================
  */
 
-#include "file.h"
+#include "header.h"
 
 /* List of all C language keywords */
 char keywords[32][10] = {
@@ -80,6 +80,8 @@ int main(int argc, char *argv[])
     if (argc < 2)
     {
         printf("\033[31mError : Input file is not present\033[0m\n");
+        printf("Usage : ");
+        printf("\"a.out\" \"filename\"\n");
         return 0;
     }
 
@@ -181,7 +183,7 @@ int check_tokens(FILE *fptr)
             /* Delimiters */
             else if (!isspace(ch))
             {
-                printf("\033[37mDELIMETER:\033[0m %c\n", ch);
+                printf("\033[35m%-22s\033[0m %c\n", "Special Character:", ch);
 
                 /* ')' must be followed by semicolon or block */
                 if (ch == ')')
@@ -204,28 +206,28 @@ int check_tokens(FILE *fptr)
 void check_type(char *str)
 {
     if (is_keyword(str))
-        printf("\033[34mKEYWORD :\033[0m %s\n", str);
+        printf("\033[34m%-22s\033[0m %s\n", "KEYWORD :", str);
 
     else if (is_identifier(str))
-        printf("\033[32mIDENTIFIER :\033[0m %s\n", str);
+        printf("\033[32m%-22s\033[0m %s\n", "IDENTIFIER :", str);
 
     else if (is_intconstant(str))
-        printf("\033[33mINT CONSTANT :\033[0m %s\n", str);
+        printf("\033[33m%-22s\033[0m %s\n", "INT CONSTANT :", str);
 
     else if (is_floatConstant(str))
-        printf("FLOAT CONSTANT : %s\n", str);
+        printf("%-22s %s\n", "FLOAT CONSTANT :", str);
 
     else if (is_binary(str))
-        printf("BINARY CONSTANT : %s\n", str);
+        printf("%-22s %s\n", "BINARY CONSTANT :", str);
 
     else if (is_hexadecimal(str))
-        printf("HEXADECIMAL CONSTANT : %s\n", str);
+        printf("%-22s %s\n", "HEXADECIMAL CONSTANT :", str);
 
     else if (is_octal(str))
-        printf("OCTAL CONSTANT : %s\n", str);
+        printf("%-22s %s\n", "OCTAL CONSTANT :", str);
 
     else
-        printf("\033[31mINVALID TOKEN :\033[0m %s\n", str);
+        printf("\033[31m%-22s\033[0m %s\n", "INVALID TOKEN :", str);
 }
 
 /* Validate file extension and open file */
@@ -239,9 +241,10 @@ FILE *validate_file(char *filename)
     /* Check for .c extension */
     if ((substr = strstr(filename, ".c")))
     {
-        if (strlen(filename) - strlen(substr) != 2)
+        if ((substr - filename ) != (strlen(filename)- 2))
         {
             printf("Error : File is not a .c file\n");
+            return 0 ;
         }
     }
 
