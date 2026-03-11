@@ -1,4 +1,4 @@
-#include "file.h"
+#include "header.h"
 
 /* External declarations shared across lexer modules */
 extern char keywords[32][10];     // List of C keywords
@@ -65,7 +65,8 @@ int is_char_constant(FILE *fptr, char ch)
    {
       buff[j++] = ch;
       buff[j++] = '\0';
-      printf("\033[36mCHAR CONSTANT :\033[0m %s\n", buff);
+      // printf("\033[36mCHAR CONSTANT :\033[0m %s\n", buff);
+      printf("\033[36m%-22s\033[0m %s\n", "Character CONSTANT :", buff);
    }
    else
    {
@@ -269,7 +270,8 @@ int is_string_litral(FILE *fptr, char ch)
    buffer[i++] = '"';
    buffer[i++] = '\0';
 
-   printf("\033[32mString Literal :\033[0m %s\n", buffer);
+   // printf("\033[32mString Literal :\033[0m %s\n", buffer);
+    printf("\033[32m%-22s\033[0m %s\n", "String Literal :", buffer);
    semicolon_expected = 1;
    return 1;
 }
@@ -293,13 +295,15 @@ int is_operator(FILE *fptr, char ch)
          {
             if (ch1 == operators[j])
             {
-               printf("\033[35mOPERATOR :\033[0m %c%c\n", ch, ch1);
+               // printf("\033[35mOPERATOR :\033[0m %c%c\n", ch, ch1);
+               printf("\033[35m%-22s\033[0m %c%c\n", "OPERATOR :", ch, ch1);
                return 1;
             }
          }
 
          /* Single-character operator */
-         printf("\033[35mOPERATOR :\033[0m %c\n", ch);
+         printf("\033[35m%-22s\033[0m %c\n", "OPERATOR :", ch);
+         // printf("\033[35mOPERATOR :\033[0m %c\n", ch);
          ungetc(ch1, fptr);   // Restore lookahead character
          return 1;
       }
